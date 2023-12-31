@@ -20,7 +20,6 @@ pub enum Error {
 
     // #[error("Unknown attribute {0}")]
     // UnknownAttribute(String),
-
     #[error("XML error: {0}")]
     Xml(#[from] quick_xml::Error),
 
@@ -51,7 +50,6 @@ struct Item {
     enclosure_type: String,
     guid: String,
     itunes_title: String,
-    // itunes_subtitle: String,
     itunes_author: String,
     itunes_duration: String,
 }
@@ -59,7 +57,6 @@ struct Item {
 impl Item {
     pub fn read(reader: &mut Reader<&[u8]>) -> Result<Self, Error> {
         let mut item_builder = ItemBuilder::default();
-        println!("Reading item");
 
         loop {
             match reader.read_event()? {
@@ -83,9 +80,6 @@ impl Item {
                     b"itunes:title" => {
                         item_builder.itunes_title(reader.read_text(e.name())?.into_owned());
                     }
-                    // b"itunes:subtitle" => {
-                    //     item_builder.itunes_subtitle(reader.read_text(e.name())?.into_owned());
-                    // }
                     b"itunes:author" => {
                         item_builder.itunes_author(reader.read_text(e.name())?.into_owned());
                     }
@@ -191,6 +185,12 @@ pub fn process_feed(feed: &str) -> Result<String, Error> {
     loop {
         match reader.read_event()? {
             Event::Start(ref e) => match e.name().as_ref() {
+                b"title" => {
+                    reader.read_text(e.name())?;
+                    writer.write_event(Event::Start(BytesStart::new("title")))?;
+                    writer.write_event(Event::Text(BytesText::new("Project Last Year")))?;
+                    writer.write_event(Event::End(BytesEnd::new("title")))?;
+                }
                 b"item" => {
                     let mut item = Item::read(&mut reader)?;
                     item.advance_one_year();
@@ -201,13 +201,11 @@ pub fn process_feed(feed: &str) -> Result<String, Error> {
                 }
             },
             Event::Eof => {
-                println!("Eof");
                 writer.write_event(Event::Eof)?;
                 break;
             }
             e => {
-                println!("Other event {:?}", e);
-                println!("written {:?}", writer.write_event(e));
+                writer.write_event(e)?;
             }
         }
     }
