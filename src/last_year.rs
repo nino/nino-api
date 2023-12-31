@@ -1,3 +1,6 @@
+/// Note that this is the worst code anyone's ever written in the history of the universe. XML is
+/// so annoying omg.
+
 extern crate derive_builder;
 use chrono::{DateTime, FixedOffset};
 use quick_xml::{
