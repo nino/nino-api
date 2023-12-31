@@ -1,6 +1,9 @@
 mod last_year;
 
 #[macro_use]
+extern crate derive_builder;
+
+#[macro_use]
 extern crate rocket;
 
 #[get("/")]
@@ -18,13 +21,11 @@ async fn last_year_handler() -> String {
         .await
         .unwrap();
 
-    last_year::process_feed(&feed)
-    // Select rss->channel
-    // Process the feed such that every rss->channel->item has its `pubDate` set to the next year,
-    // and any items whose `pubDate` are now in the future are removed.
+    match last_year::process_feed(&feed) {
+        Ok(feed) => feed,
+        Err(e) => format!("Error: {:?}", e),
+    }
 
-    // Return the new XML as a string.
-    // todo!()
 }
 
 #[launch]
