@@ -13,19 +13,13 @@ fn index() -> &'static str {
 
 #[get("/last-year")]
 async fn last_year_handler() -> String {
-    // Fetch the feed from https://ninoan.com/audio/project-hail-mary.xml
-    let feed = reqwest::get("https://ninoan.com/audio/project-hail-mary.xml")
-        .await
-        .unwrap()
-        .text()
-        .await
-        .unwrap();
-
-    match last_year::process_feed(&feed) {
-        Ok(feed) => feed,
+    match last_year::fetch_feed().await {
+        Ok(feed) => match last_year::process_feed(&feed) {
+            Ok(feed) => feed,
+            Err(e) => format!("Error: {:?}", e),
+        },
         Err(e) => format!("Error: {:?}", e),
     }
-
 }
 
 #[launch]

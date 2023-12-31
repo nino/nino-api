@@ -12,7 +12,8 @@ COPY src ./src
 RUN cargo build --release
 
 FROM debian:buster-slim
-RUN apt-get update && apt-get install -y libssl-dev && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y libssl-dev \
+    && apt-get install -y ca-certificates && apt-get clean && rm -rf /var/lib/apt/lists/*
 COPY --from=builder /usr/src/nino-api/target/release/nino-api /usr/local/bin/nino-api
 COPY Rocket.toml .
 EXPOSE 8000

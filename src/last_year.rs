@@ -1,6 +1,5 @@
 /// Note that this is the worst code anyone's ever written in the history of the universe. XML is
 /// so annoying omg.
-
 extern crate derive_builder;
 use chrono::{DateTime, FixedOffset};
 use quick_xml::{
@@ -31,6 +30,9 @@ pub enum Error {
 
     #[error("Attribute error: {0}")]
     Attribute(#[from] AttrError),
+
+    #[error("Reqwest error: {0}")]
+    Reqwest(#[from] reqwest::Error),
 }
 
 impl ItemBuilder {
@@ -214,4 +216,13 @@ pub fn process_feed(feed: &str) -> Result<String, Error> {
     }
 
     Ok(String::from_utf8(writer.into_inner())?)
+}
+
+pub async fn fetch_feed() -> Result<String, Error> {
+    Ok(
+        reqwest::get("https://ninoan.com/audio/project-hail-mary.xml")
+            .await?
+            .text()
+            .await?,
+    )
 }
