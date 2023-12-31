@@ -8,6 +8,5 @@ chrono = "0.4.31"
 derive_builder = "0.12.0"
 quick-xml = "0.31.0"
 reqwest = "0.11.23"
-rocket = { version = "0.5.0", features = ["secrets", "json"] }
-serde = "1.0.193"
+rocket = { version = "0.5.0" }
 thiserror = "1.0.52"
