@@ -10,10 +10,6 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum Error {
-    // #[error("XML error: {0}")]
-    // Xml(#[from] quick_xml::Error),
-    // #[error("IO error: {0}")]
-    // Io(#[from] std::io::Error),
     #[error("Error parsing item: {0}")]
     MissingItemAttribute(#[from] ItemBuilderError),
 
@@ -45,7 +41,7 @@ impl ItemBuilder {
 }
 
 #[derive(Builder)]
-struct Item {
+pub struct Item {
     title: String,
     link: String,
     description: String,
