@@ -16,8 +16,6 @@ pub enum Error {
     #[error("Error parsing date: {0}")]
     Date(#[from] chrono::ParseError),
 
-    // #[error("Unknown attribute {0}")]
-    // UnknownAttribute(String),
     #[error("XML error: {0}")]
     Xml(#[from] quick_xml::Error),
 
