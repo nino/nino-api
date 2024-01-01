@@ -31,6 +31,8 @@ pub enum Error {
 
 impl ItemBuilder {
     fn parse_pub_date(&mut self, date: &str) -> Result<(), Error> {
+        // One entry in the feed uses "Wednesday" instead of "Wed", so we need to try two date
+        // formats ¯\_(ツ)_/¯
         let date_attempt1 = DateTime::parse_from_str(&date, "%a, %d %b %Y %H:%M:%S %z");
         let date_attempt2 = DateTime::parse_from_str(&date, "%A, %d %b %Y %H:%M:%S %z");
         self.pub_date(date_attempt1.or(date_attempt2)?);
