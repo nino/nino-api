@@ -1,4 +1,10 @@
-# Nino-API
+# Building
 
-This is the place where I can put all my API services. Deployed to
-<https://nino-api.fly.io>.
+You need to have asio installed on your system. One of the following might work:
+
+```
+brew install asio
+apt-get install libasio-dev
+```
+
+Then just use CMake like normal.
