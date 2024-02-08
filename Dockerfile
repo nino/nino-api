@@ -18,7 +18,7 @@ FROM ubuntu:latest
 RUN apt-get update && apt-get install -y ca-certificates && apt-get clean
 RUN mkdir -p /app/build
 WORKDIR /app
-COPY --from=BUILDER /app/build /app/build
+COPY --from=BUILDER /app/build/api /app/build
 
 EXPOSE 8080
 ENTRYPOINT ["./build/api"]
