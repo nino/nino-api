@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:latest AS BUILDER
 
 RUN apt-get update && apt-get install -y \
     cmake \
@@ -12,5 +12,12 @@ WORKDIR /app
 COPY . /app
 
 RUN cmake -B build . && cmake --build build
+
+FROM ubuntu:latest
+
+RUN mkdir -p /app/build
+WORKDIR /app
+COPY --from=BUILDER /app/build/api /app/build
+
 EXPOSE 8080
 ENTRYPOINT ["./build/api"]
