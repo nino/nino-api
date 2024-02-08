@@ -13,11 +13,12 @@ COPY . /app
 
 RUN cmake -B build . && cmake --build build
 
-FROM ubuntu:latest
+# FROM ubuntu:latest
 
-RUN mkdir -p /app/build
-WORKDIR /app
-COPY --from=BUILDER /app/build/api /app/build
+# # RUN apt-get update && apt-get install -y openssl && apt-get clean
+# RUN mkdir -p /app/build
+# WORKDIR /app
+# COPY --from=BUILDER /app/build /app/build
 
 EXPOSE 8080
 ENTRYPOINT ["./build/api"]
