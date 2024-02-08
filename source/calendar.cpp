@@ -2,6 +2,7 @@
 #include <ctime>
 #include <optional>
 #include <sstream>
+#include <vector>
 
 const std::vector<std::string> date_formats = {"%F"};
 
