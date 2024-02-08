@@ -41,7 +41,7 @@ FetchContent_MakeAvailable(pugixml)
 
 find_package(OpenSSL REQUIRED)
 
-add_executable(api source/main.cpp source/last_year.cpp source/http.cpp)
+add_executable(api source/main.cpp source/last_year.cpp source/http.cpp source/calendar.cpp)
 
 target_link_libraries(api PRIVATE pugixml Crow::Crow)
 target_include_directories(api PRIVATE ${OPENSSL_INCLUDE_DIR})

@@ -2,5 +2,5 @@
 #include <string>
 
 namespace last_year {
-  std::string handler();
+std::string handler();
 }
