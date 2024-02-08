@@ -15,7 +15,7 @@ RUN cmake -B build . && cmake --build build
 
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y openssl && apt-get clean
+RUN apt-get update && apt-get install -y ca-certificates && apt-get clean
 RUN mkdir -p /app/build
 WORKDIR /app
 COPY --from=BUILDER /app/build /app/build
