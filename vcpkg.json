@@ -1,0 +1,9 @@
+{
+  "name": "nino-api-cpp",
+  "version": "1.0.0",
+  "dependencies": [
+    "pugixml",
+    "crow",
+    "openssl"
+  ]
+}

@@ -22,23 +22,9 @@ add_compile_options(-Wno-enum-compare-switch)
 add_compile_options(-Wno-enum-compare)
 add_compile_options(-Wno-enum-compare-switch)
 
-include(FetchContent)
-
-FetchContent_Declare(
-  pugixml
-  GIT_REPOSITORY https://github.com/zeux/pugixml
-  GIT_TAG        master # It's usually better to pin a specific commit or version tag
-)
-
-FetchContent_Declare(
-  crow
-  GIT_REPOSITORY https://github.com/CrowCpp/crow
-  GIT_TAG        master # It's usually better to pin a specific commit or version tag
-)
-
-FetchContent_MakeAvailable(crow)
-FetchContent_MakeAvailable(pugixml)
-
+# Find packages using vcpkg
+find_package(pugixml CONFIG REQUIRED)
+find_package(Crow CONFIG REQUIRED)
 find_package(OpenSSL REQUIRED)
 
 add_executable(api source/main.cpp source/last_year.cpp source/http.cpp source/calendar.cpp)
