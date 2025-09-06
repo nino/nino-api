@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22.0)
 project(nino_api_cpp)
-add_compile_options(-std=c++20)
+add_compile_options(-std=c++23)
 add_compile_options(-Wall)
 add_compile_options(-Wextra)
 add_compile_options(-Wpedantic)
