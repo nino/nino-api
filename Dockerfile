@@ -1,9 +1,10 @@
-FROM ubuntu:latest AS BUILDER
+FROM ubuntu:24.04 AS builder
 
 # Install build dependencies and tools needed for vcpkg
 RUN apt-get update && apt-get install -y \
     cmake \
-    clang \
+    g++-13 \
+    gcc-13 \
     git \
     curl \
     zip \
@@ -12,6 +13,9 @@ RUN apt-get update && apt-get install -y \
     ninja-build \
     pkg-config \
     && apt-get clean
+
+ENV CC=/usr/bin/gcc-13
+ENV CXX=/usr/bin/g++-13
 
 # Install vcpkg
 RUN git clone https://github.com/Microsoft/vcpkg.git /vcpkg && \
@@ -29,12 +33,12 @@ COPY source ./source
 RUN cmake -B build . -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake && \
     cmake --build build
 
-FROM ubuntu:latest
+FROM ubuntu:24.04
 
 RUN apt-get update && apt-get install -y ca-certificates && apt-get clean
 RUN mkdir -p /app/build
 WORKDIR /app
-COPY --from=BUILDER /app/build/api /app/build
+COPY --from=builder /app/build/api /app/build
 
 EXPOSE 8080
 ENTRYPOINT ["./build/api"]
