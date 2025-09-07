@@ -1,4 +1,5 @@
 #include "calendar.hpp"
+#include <array>
 #include <ctime>
 #include <optional>
 #include <sstream>
@@ -22,8 +23,9 @@ std::string calendar::handler(std::string title, std::string start_date) {
         return "Unable to parse start date";
     }
 
-    char formatted_date[100];
-    std::strftime(formatted_date, 100, "%Y%m%d", &parsed_date.value());
+    std::array<char, 100> formatted_date;
+    std::strftime(formatted_date.data(), formatted_date.size(), "%Y%m%d",
+                  &parsed_date.value());
 
     std::stringstream output;
 
