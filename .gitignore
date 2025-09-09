@@ -1,4 +1,6 @@
 /target
 /build
 .cache
+vcpkg_installed
+vcpkg-manifest-install.log
 Old\ Rust\ implementation/target
